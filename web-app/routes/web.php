@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LivrosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,10 @@ Route::get('/home', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::resource('livros', LivrosController::class)
+->except(['destroy'])
+->middleware(['auth']);
+Route::get('livros/delete/{livro}', [LivrosController::class, 'destroy'])
+->name('livros.delete');
+->middleware(['auth']);
